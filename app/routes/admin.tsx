@@ -27,8 +27,7 @@ import {
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 // const BASE_URL = "http://localhost:8080";
-const BASE_URL =
-  "http://lochttps://simple-survey-api-709223111431.africa-south1.run.app";
+const BASE_URL = "https://simple-survey-api-709223111431.africa-south1.run.app";
 
 // ─── XML Helpers ──────────────────────────────────────────────────────────────
 
