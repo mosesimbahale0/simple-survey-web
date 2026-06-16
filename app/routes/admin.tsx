@@ -122,7 +122,8 @@ function parseResponses(doc) {
       // Collect all field tags dynamically
       const fields = {};
       Array.from(r.children).forEach((child) => {
-        const tag = child.tagName.toLowerCase();
+        // Normalize tag names by replacing spaces with underscores
+        const tag = child.tagName.replace(/\s/g, '_').toLowerCase();
         if (tag === "certificates") return;
         fields[tag] = child.textContent.trim();
       });
@@ -691,7 +692,7 @@ function ResponsesPanel({ surveyId }) {
     load();
   }, [load]);
 
-  const HIDDEN = new Set(["response_id", "date_responded"]);
+  const HIDDEN = new Set(["response_id", "date_responded", "email_address"]);
 
   return (
     <div>
@@ -750,10 +751,7 @@ function ResponsesPanel({ surveyId }) {
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
                   <p className="text-[14px] font-semibold text-[#011F53]">
-                    {r.fields.full_name || "—"}
-                  </p>
-                  <p className="text-[12px] text-slate-400">
-                    {r.fields.email_address || ""}
+                    {r.fields.email_address || "—"}
                   </p>
                 </div>
                 <div className="text-right flex-shrink-0">
@@ -769,9 +767,7 @@ function ResponsesPanel({ surveyId }) {
                 {Object.entries(r.fields)
                   .filter(
                     ([k]) =>
-                      !HIDDEN.has(k) &&
-                      k !== "full_name" &&
-                      k !== "email_address",
+                      !HIDDEN.has(k)
                   )
                   .map(([k, v]) => (
                     <div key={k} className="flex gap-2">
